@@ -10,7 +10,7 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $results = Project::with('type', 'technologies', 'type.projects')->get();
+        $results = Project::with('type', 'technologies')->get();
 
         return response()->json([
             'projects' => $results,
@@ -21,7 +21,8 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        $project->load('type', 'technologies');
+        // Aggiungere qua type.projects, serve per recuperare anche tutti i progetti che hanno quel type
+        $project->load('type', 'technologies', 'type.projects', 'type.projects.technologies');
 
         return response()->json([
             'project' => $project,
