@@ -3,7 +3,7 @@
 @section('content')
     <section>
         <div class="container py-4">
-            <h1 class="my-4 text-light">Crea un nuovo Tipo di Progetto</h1>
+            <h1 class="my-4 text-light">Modifica Tipo di Progetto</h1>
 
             <form action="{{ route('admin.project_types.update', $project_type->id) }}" method="POST">
                 
