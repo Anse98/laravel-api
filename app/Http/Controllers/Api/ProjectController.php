@@ -8,9 +8,17 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $results = Project::with('type', 'technologies')->orderBy('created_at', 'desc')->paginate(10);
+
+        $type_id = $request->input('type_id');
+
+        $results = Project::with('type', 'technologies', 'type.projects')
+            ->when($type_id, function ($query) use ($type_id) {
+                return $query->where('type_id', $type_id);
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
         return response()->json([
             'projects' => $results,
